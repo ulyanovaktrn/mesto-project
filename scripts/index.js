@@ -1,3 +1,4 @@
+const popups = document.querySelectorAll('.popup');
 const profilePopup = document.querySelector('.popup_type_edit');
 const cardPopup = document.querySelector('.popup_type_new-card');
 const imagePopup = document.querySelector('.popup_type_image');
@@ -9,6 +10,7 @@ const profileEditButton = document.querySelector('.profile__edit-button');
 const closeProfileEditButton = profilePopup.querySelector('.popup__close');
 const cardAddButton = document.querySelector('.profile__add-button');
 const closeCardAddButton = cardPopup.querySelector('.popup__close');
+const closeImageButton = imagePopup.querySelector('.popup__close');
 
 const profileTitle = document.querySelector('.profile__title');
 const profileDescription = document.querySelector('.profile__description');
@@ -17,11 +19,14 @@ const nameInput = profilePopup.querySelector('.popup__input_type_name');
 const jobInput = profilePopup.querySelector('.popup__input_type_description');
 const nameCardInput = cardPopup.querySelector('.popup__input_type_card-name');
 const urlCardInput = cardPopup.querySelector('.popup__input_type_url');
+const nameImage = imagePopup.querySelector('.popup__caption');
+const urlImage = imagePopup.querySelector('.popup__image');
 
 //Темплейт карточки
 const cardTemplate = document.querySelector('#card-template');
 const placesList = document.querySelector('.places__list');
 
+popups.forEach((item) => item.classList.add('popup_is-animated'));
 // @todo: DOM узлы
 
 //Функция создания карточки
@@ -46,15 +51,18 @@ function createCard(itemCard) {
 
 //Функция удаления карточки
 function handleDelCard(evt){
-
+  evt.target.closest('.places__item').remove();
 }
 
 function handleLikeCard(evt){
-
+  evt.target.classList.toggle('card__like-button_is-active');
 }
 
 function openImageCardPopup(imageCard){
-  
+  nameImage.textContent = imageCard.alt;
+  urlImage.src = imageCard.src;
+  urlImage.alt = imageCard.alt;
+  openModal(imagePopup);
 }
 
 //Вывести карточки на страницу
@@ -100,6 +108,7 @@ profileEditButton.addEventListener('click', openProfilePopup);
 closeProfileEditButton.addEventListener('click', () => closeModal(profilePopup));
 cardAddButton.addEventListener('click', openCardPopup);
 closeCardAddButton.addEventListener('click', () => closeModal(cardPopup));
+closeImageButton.addEventListener('click', () => closeModal(imagePopup));
 
 profileFormElement.addEventListener('submit', handleProfileFormSubmit);
 cardFormElement.addEventListener('submit', handleCardFormSubmit);
