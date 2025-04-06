@@ -7,10 +7,11 @@ const profileFormElement = document.querySelector('.popup__form[name="edit-profi
 const cardFormElement = document.querySelector('.popup__form[name="new-place"]');
 
 const profileEditButton = document.querySelector('.profile__edit-button');
-const closeProfileEditButton = profilePopup.querySelector('.popup__close');
+//const closeProfileEditButton = profilePopup.querySelector('.popup__close');
 const cardAddButton = document.querySelector('.profile__add-button');
-const closeCardAddButton = cardPopup.querySelector('.popup__close');
-const closeImageButton = imagePopup.querySelector('.popup__close');
+//const closeCardAddButton = cardPopup.querySelector('.popup__close');
+//const closeImageButton = imagePopup.querySelector('.popup__close');
+const closePopupsButtons = document.querySelectorAll('.popup__close');
 
 const profileTitle = document.querySelector('.profile__title');
 const profileDescription = document.querySelector('.profile__description');
@@ -105,10 +106,11 @@ function handleCardFormSubmit(evt){
 }
 
 profileEditButton.addEventListener('click', openProfilePopup);
-closeProfileEditButton.addEventListener('click', () => closeModal(profilePopup));
+//closeProfileEditButton.addEventListener('click', () => closeModal(profilePopup));
 cardAddButton.addEventListener('click', openCardPopup);
-closeCardAddButton.addEventListener('click', () => closeModal(cardPopup));
-closeImageButton.addEventListener('click', () => closeModal(imagePopup));
+//closeCardAddButton.addEventListener('click', () => closeModal(cardPopup));
+//closeImageButton.addEventListener('click', () => closeModal(imagePopup));
+popups.forEach((item, id) => closePopupsButtons[id].addEventListener('click', () => closeModal(item)));
 
 profileFormElement.addEventListener('submit', handleProfileFormSubmit);
 cardFormElement.addEventListener('submit', handleCardFormSubmit);
