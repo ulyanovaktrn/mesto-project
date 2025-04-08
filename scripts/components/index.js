@@ -11,7 +11,7 @@ const profileEditButton = document.querySelector('.profile__edit-button');
 const cardAddButton = document.querySelector('.profile__add-button');
 //const closeCardAddButton = cardPopup.querySelector('.popup__close');
 //const closeImageButton = imagePopup.querySelector('.popup__close');
-const closePopupsButtons = document.querySelectorAll('.popup__close');
+//const closePopupsButtons = document.querySelectorAll('.popup__close');
 
 const profileTitle = document.querySelector('.profile__title');
 const profileDescription = document.querySelector('.profile__description');
@@ -27,37 +27,21 @@ const urlImage = imagePopup.querySelector('.popup__image');
 const cardTemplate = document.querySelector('#card-template');
 const placesList = document.querySelector('.places__list');
 
+// Создание объекта с настройками валидации
+const validationSettings = {
+  formSelector: '.popup__form',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__button',
+  inactiveButtonClass: 'popup__button_disabled',
+  inputErrorClass: 'popup__input_type_error',
+  errorClass: 'popup__error_visible'
+}
+// включение валидации вызовом enableValidation
+// все настройки передаются при вызове
+//enableValidation(validationSettings);
+
 popups.forEach((item) => item.classList.add('popup_is-animated'));
 // @todo: DOM узлы
-
-//Функция создания карточки
-function createCard(itemCard) {
-  const cloneCardTemplate = cardTemplate.content.cloneNode(true);
-  const imageCard = cloneCardTemplate.querySelector('.card__image');
-  const titleCard = cloneCardTemplate.querySelector('.card__title');
-
-  const likeCardBtn = cloneCardTemplate.querySelector('.card__like-button');
-  const delCardBtn = cloneCardTemplate.querySelector('.card__delete-button');
-
-  imageCard.src = itemCard.link;
-  imageCard.alt = itemCard.name;
-  titleCard.textContent = itemCard.name;
-
-  likeCardBtn.addEventListener('click', handleLikeCard);
-  delCardBtn.addEventListener('click', handleDelCard);
-  imageCard.addEventListener('click', () => openImageCardPopup(imageCard));
-
-  return cloneCardTemplate;
-}
-
-//Функция удаления карточки
-function handleDelCard(evt){
-  evt.target.closest('.places__item').remove();
-}
-
-function handleLikeCard(evt){
-  evt.target.classList.toggle('card__like-button_is-active');
-}
 
 function openImageCardPopup(imageCard){
   nameImage.textContent = imageCard.alt;
@@ -110,7 +94,7 @@ profileEditButton.addEventListener('click', openProfilePopup);
 cardAddButton.addEventListener('click', openCardPopup);
 //closeCardAddButton.addEventListener('click', () => closeModal(cardPopup));
 //closeImageButton.addEventListener('click', () => closeModal(imagePopup));
-popups.forEach((item, id) => closePopupsButtons[id].addEventListener('click', () => closeModal(item)));
+popups.forEach((item) => item.querySelector('.popup__close').addEventListener('click', () => closeModal(item)));
 
 profileFormElement.addEventListener('submit', handleProfileFormSubmit);
 cardFormElement.addEventListener('submit', handleCardFormSubmit);
