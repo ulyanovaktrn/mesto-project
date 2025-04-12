@@ -3,7 +3,3 @@
   background: white;
   border: #c5c5c5 1px solid;
 }
-  
-.popup__button_disabled:hover {
-  opacity: 20%;
-}

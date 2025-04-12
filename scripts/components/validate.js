@@ -1,6 +1,5 @@
 const showInputError = (popupForm, formInput, errorMessage, settings) => {
     const formError = popupForm.querySelector(`.${formInput.name}-input-error`);
-    //console.log(`.${formInput.name}-input-error`);
   
     formInput.classList.add(settings.inputErrorClass);
     formError.textContent = errorMessage;
@@ -20,7 +19,6 @@ const hideInputError = (popupForm, formInput, settings) => {
 const isValid = (popupForm, formInput, settings) => {
     if (!formInput.validity.valid) {
       showInputError(popupForm, formInput, formInput.validationMessage, settings);
-      console.log('smth');
     } else {
       hideInputError(popupForm, formInput, settings);
     };
