@@ -28,7 +28,7 @@ const initialCards = [
 
 //Функция создания карточки
 function createCard(itemCard) {
-  const cloneCardTemplate = cardTemplate.content.cloneNode(true);
+  const cloneCardTemplate = document.querySelector('#card-template').content.cloneNode(true);
   const imageCard = cloneCardTemplate.querySelector('.card__image');
   const titleCard = cloneCardTemplate.querySelector('.card__title');
 

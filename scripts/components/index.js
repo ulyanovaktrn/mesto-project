@@ -1,3 +1,5 @@
+import { enableValidation, inactivateButton } from './validate.js'
+
 const popups = document.querySelectorAll('.popup');
 const profilePopup = document.querySelector('.popup_type_edit');
 const cardPopup = document.querySelector('.popup_type_new-card');
@@ -12,6 +14,8 @@ const cardAddButton = document.querySelector('.profile__add-button');
 //const closeCardAddButton = cardPopup.querySelector('.popup__close');
 //const closeImageButton = imagePopup.querySelector('.popup__close');
 //const closePopupsButtons = document.querySelectorAll('.popup__close');
+const cardSubmitBtn = cardPopup.querySelector('.popup__button');
+const profileSubmitBtn = profilePopup.querySelector('.popup__button');
 
 const profileTitle = document.querySelector('.profile__title');
 const profileDescription = document.querySelector('.profile__description');
@@ -24,21 +28,8 @@ const nameImage = imagePopup.querySelector('.popup__caption');
 const urlImage = imagePopup.querySelector('.popup__image');
 
 //Темплейт карточки
-const cardTemplate = document.querySelector('#card-template');
+//const cardTemplate = document.querySelector('#card-template');
 const placesList = document.querySelector('.places__list');
-
-// Создание объекта с настройками валидации
-const validationSettings = {
-  formSelector: '.popup__form',
-  inputSelector: '.popup__input',
-  submitButtonSelector: '.popup__button',
-  inactiveButtonClass: 'popup__button_disabled',
-  inputErrorClass: 'popup__input_type_error',
-  errorClass: 'popup__error_visible'
-}
-// включение валидации вызовом enableValidation
-// все настройки передаются при вызове
-//enableValidation(validationSettings);
 
 popups.forEach((item) => item.classList.add('popup_is-animated'));
 // @todo: DOM узлы
@@ -81,6 +72,7 @@ function handleProfileFormSubmit(evt) {
   profileTitle.textContent = nameInput.value;
   profileDescription.textContent = jobInput.value;
   closeModal(profilePopup);
+  inactivateButton(profileSubmitBtn, validationSettings);
 }
 
 function handleCardFormSubmit(evt){
@@ -98,3 +90,16 @@ popups.forEach((item) => item.querySelector('.popup__close').addEventListener('c
 
 profileFormElement.addEventListener('submit', handleProfileFormSubmit);
 cardFormElement.addEventListener('submit', handleCardFormSubmit);
+
+// Создание объекта с настройками валидации
+const validationSettings = {
+  formSelector: '.popup__form',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__button',
+  inactiveButtonClass: 'popup__button_disabled',
+  inputErrorClass: 'popup__input_type_error',
+  errorClass: 'popup__error_visible'
+}
+// включение валидации вызовом enableValidation
+// все настройки передаются при вызове
+enableValidation(validationSettings);
