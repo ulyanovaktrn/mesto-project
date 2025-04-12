@@ -1,4 +1,8 @@
 import { enableValidation, inactivateButton } from './validate.js'
+import {initialCards} from './cards.js'
+import '../pages/index.css';
+
+console.log("Hi!");
 
 const popups = document.querySelectorAll('.popup');
 const profilePopup = document.querySelector('.popup_type_edit');
@@ -27,12 +31,18 @@ const urlCardInput = cardPopup.querySelector('.popup__input_type_url');
 const nameImage = imagePopup.querySelector('.popup__caption');
 const urlImage = imagePopup.querySelector('.popup__image');
 
-//Темплейт карточки
-//const cardTemplate = document.querySelector('#card-template');
 const placesList = document.querySelector('.places__list');
 
 popups.forEach((item) => item.classList.add('popup_is-animated'));
-// @todo: DOM узлы
+
+popups.forEach((item) => {
+  item.querySelector('.popup__close').addEventListener('click', () => closeModal(item));
+  item.addEventListener('mousedown', function(evt) {
+    if (evt.currentTarget === evt.target) {
+      closeModal(item);
+    }
+  })
+});
 
 //Вывести карточки на страницу
 initialCards.forEach((item) => {
@@ -123,14 +133,6 @@ profileEditButton.addEventListener('click', openProfilePopup);
 cardAddButton.addEventListener('click', openCardPopup);
 //closeCardAddButton.addEventListener('click', () => closeModal(cardPopup));
 //closeImageButton.addEventListener('click', () => closeModal(imagePopup));
-popups.forEach((item) => {
-  item.querySelector('.popup__close').addEventListener('click', () => closeModal(item));
-  item.addEventListener('mousedown', function(evt) {
-    if (evt.currentTarget === evt.target) {
-      closeModal(item);
-    }
-  })
-});
 
 profileFormElement.addEventListener('submit', handleProfileFormSubmit);
 cardFormElement.addEventListener('submit', handleCardFormSubmit);
