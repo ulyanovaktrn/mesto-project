@@ -1,8 +1,9 @@
 import { enableValidation, inactivateButton } from './validate.js'
-import {initialCards} from './cards.js'
+import { initialCards } from './cards.js'
+import { closeModal, openModal } from './modal.js'
+import { createCard } from './card.js';
 import '../pages/index.css';
 
-console.log("Hi!");
 
 const popups = document.querySelectorAll('.popup');
 const profilePopup = document.querySelector('.popup_type_edit');
@@ -46,54 +47,8 @@ popups.forEach((item) => {
 
 //Вывести карточки на страницу
 initialCards.forEach((item) => {
-  placesList.append(createCard(item));
+  placesList.append(createCard(item, openImageCardPopup));
 });
-
-function closeByEsc(evt) {
-  if (evt.key === "Escape") {
-    const openedPopup = document.querySelector('.popup_is-opened');
-    closeModal(openedPopup);
-  } 
-}
-
-function openModal(popup){
-  popup.classList.add('popup_is-opened');
-  document.addEventListener('keydown', closeByEsc);
-}
-
-function closeModal(popup) {
-  popup.classList.remove('popup_is-opened');
-  document.removeEventListener('keydown', closeByEsc);
-}
-
-//Функция создания карточки
-function createCard(itemCard) {
-  const cloneCardTemplate = document.querySelector('#card-template').content.cloneNode(true);
-  const imageCard = cloneCardTemplate.querySelector('.card__image');
-  const titleCard = cloneCardTemplate.querySelector('.card__title');
-
-  const likeCardBtn = cloneCardTemplate.querySelector('.card__like-button');
-  const delCardBtn = cloneCardTemplate.querySelector('.card__delete-button');
-
-  imageCard.src = itemCard.link;
-  imageCard.alt = itemCard.name;
-  titleCard.textContent = itemCard.name;
-
-  likeCardBtn.addEventListener('click', handleLikeCard);
-  delCardBtn.addEventListener('click', handleDelCard);
-  imageCard.addEventListener('click', () => openImageCardPopup(imageCard));
-
-  return cloneCardTemplate;
-}
-
-//Функция удаления карточки
-function handleDelCard(evt){
-  evt.target.closest('.places__item').remove();
-}
-
-function handleLikeCard(evt){
-  evt.target.classList.toggle('card__like-button_is-active');
-}
 
 function openImageCardPopup(imageCard){
   nameImage.textContent = imageCard.alt;
@@ -124,7 +79,7 @@ function handleProfileFormSubmit(evt) {
 
 function handleCardFormSubmit(evt){
   evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
-  placesList.prepend(createCard({name: nameCardInput.value, link: urlCardInput.value}));
+  placesList.prepend(createCard({name: nameCardInput.value, link: urlCardInput.value}, openImageCardPopup));
   closeModal(cardPopup);
 }
 
