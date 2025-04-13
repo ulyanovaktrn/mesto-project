@@ -1,4 +1,4 @@
-import { enableValidation, inactivateButton } from './validate.js'
+import { enableValidation, inactivateButton, resetValidation } from './validate.js'
 import { initialCards } from './cards.js'
 import { closeModal, openModal } from './modal.js'
 import { createCard } from './card.js';
@@ -60,12 +60,14 @@ function openImageCardPopup(imageCard){
 function openProfilePopup() {
   nameInput.value = profileTitle.textContent;
   jobInput.value = profileDescription.textContent;
+  resetValidation(profileFormElement, validationSettings);
   openModal(profilePopup);
 }
 
 function openCardPopup() {
   nameCardInput.value = null;
   urlCardInput.value = null;
+  resetValidation(cardFormElement, validationSettings);
   openModal(cardPopup);
 }
 
