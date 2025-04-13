@@ -71,7 +71,16 @@ const toggleButtonState = (inputList, buttonElement, settings) => {
 const inactivateButton = (buttonItem, settings) => {
     buttonItem.classList.add(settings.inactiveButtonClass);
     buttonItem.setAttribute('disabled', true);
-}
+};
 
+const resetValidation = (formElement, settings) => {
+    const inputList = Array.from(formElement.querySelectorAll(settings.inputSelector));
+    const buttonElement = formElement.querySelector(settings.submitButtonSelector);
+  
+    inputList.forEach((inputElement) => {
+        hideInputError(formElement, inputElement, settings);
+    });
+    inactivateButton(buttonElement, settings);
+};
 
-export {enableValidation, inactivateButton};
+export {enableValidation, inactivateButton, resetValidation};
