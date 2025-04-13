@@ -45,17 +45,17 @@ popups.forEach((item) => {
   })
 });
 
-//Вывести карточки на страницу
-initialCards.forEach((item) => {
-  placesList.append(createCard(item, openImageCardPopup));
-});
-
 function openImageCardPopup(imageCard){
   nameImage.textContent = imageCard.alt;
   urlImage.src = imageCard.src;
   urlImage.alt = imageCard.alt;
   openModal(imagePopup);
 }
+
+//Вывести карточки на страницу
+initialCards.forEach((item) => {
+  placesList.append(createCard(item, openImageCardPopup));
+});
 
 function openProfilePopup() {
   nameInput.value = profileTitle.textContent;
