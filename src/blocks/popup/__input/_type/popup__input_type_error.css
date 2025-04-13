@@ -1,4 +1,8 @@
 .popup__input_type_error {
+  display: block;
   font-size: 12px;
+  min-height: 2.4em;
+  overflow: visible;
+  transition: min-height 0.3s ease;
   border-bottom-color: red;
 }
