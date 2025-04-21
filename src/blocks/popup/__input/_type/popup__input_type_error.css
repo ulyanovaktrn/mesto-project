@@ -6,3 +6,7 @@
   transition: min-height 0.3s ease;
   border-bottom-color: red;
 }
+
+.popup__input_type_error:last-of-type{
+  margin-bottom: 0;
+}

@@ -1,7 +1,7 @@
 import { enableValidation, inactivateButton, resetValidation } from './validate.js'
-import { initialCards } from './cards.js'
 import { closeModal, openModal } from './modal.js'
 import { createCard } from './card.js';
+import { getUserInfo, getInitialCards, editProfile } from './api.js';
 import '../pages/index.css';
 
 
@@ -24,6 +24,8 @@ const profileSubmitBtn = profilePopup.querySelector('.popup__button');
 
 const profileTitle = document.querySelector('.profile__title');
 const profileDescription = document.querySelector('.profile__description');
+const profileImage = document.querySelector('.profile__image-picture');
+let profileId;
 
 const nameInput = profilePopup.querySelector('.popup__input_type_name');
 const jobInput = profilePopup.querySelector('.popup__input_type_description');
@@ -52,11 +54,6 @@ function openImageCardPopup(imageCard){
   openModal(imagePopup);
 }
 
-//Вывести карточки на страницу
-initialCards.forEach((item) => {
-  placesList.append(createCard(item, openImageCardPopup));
-});
-
 function openProfilePopup() {
   nameInput.value = profileTitle.textContent;
   jobInput.value = profileDescription.textContent;
@@ -73,10 +70,19 @@ function openCardPopup() {
 
 function handleProfileFormSubmit(evt) {
   evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
-  profileTitle.textContent = nameInput.value;
-  profileDescription.textContent = jobInput.value;
-  closeModal(profilePopup);
-  inactivateButton(profileSubmitBtn, validationSettings);
+  editProfile(nameInput.value, jobInput.value)
+    .then(profileData => {
+      profileTitle.textContent = nameInput.value;
+      profileDescription.textContent = jobInput.value;
+      closeModal(profilePopup);
+      inactivateButton(profileSubmitBtn, validationSettings);
+    })
+    .catch(err => {
+      console.log(err);
+    })
+    .finally(() => {
+      
+    })
 }
 
 function handleCardFormSubmit(evt){
@@ -106,3 +112,17 @@ const validationSettings = {
 // включение валидации вызовом enableValidation
 // все настройки передаются при вызове
 enableValidation(validationSettings);
+
+Promise.all([getUserInfo(), getInitialCards()])
+  .then(([userData, initialCards]) => {
+    profileTitle.textContent = userData.name;
+    profileDescription.textContent = userData.about;
+    profileImage.src = userData.avatar;
+    profileId = userData._id;
+    initialCards.forEach((item) => {
+      placesList.append(createCard(item, openImageCardPopup));
+    })
+  })
+  .catch((err) => {
+    console.log(err);
+  })
