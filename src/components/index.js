@@ -1,7 +1,7 @@
 import { enableValidation, inactivateButton, resetValidation } from './validate.js'
 import { closeModal, openModal } from './modal.js'
 import { createCard } from './card.js';
-import { getUserInfo, getInitialCards, editProfile } from './api.js';
+import { getUserInfo, getInitialCards, editProfile, addCard } from './api.js';
 import '../pages/index.css';
 
 
@@ -72,8 +72,8 @@ function handleProfileFormSubmit(evt) {
   evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
   editProfile(nameInput.value, jobInput.value)
     .then(profileData => {
-      profileTitle.textContent = nameInput.value;
-      profileDescription.textContent = jobInput.value;
+      profileTitle.textContent = profileData.value;
+      profileDescription.textContent = profileData.value;
       closeModal(profilePopup);
       inactivateButton(profileSubmitBtn, validationSettings);
     })
@@ -87,8 +87,17 @@ function handleProfileFormSubmit(evt) {
 
 function handleCardFormSubmit(evt){
   evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
-  placesList.prepend(createCard({name: nameCardInput.value, link: urlCardInput.value}, openImageCardPopup));
-  closeModal(cardPopup);
+  addCard(nameCardInput.value, urlCardInput.value)
+    .then(cardData => {
+      placesList.prepend(createCard(cardData, profileId, openImageCardPopup));
+      closeModal(cardPopup);
+    })
+    .catch(err => {
+      console.log(err);
+    })
+    .finally(() => {
+
+    });
 }
 
 profileEditButton.addEventListener('click', openProfilePopup);
@@ -120,7 +129,7 @@ Promise.all([getUserInfo(), getInitialCards()])
     profileImage.src = userData.avatar;
     profileId = userData._id;
     initialCards.forEach((item) => {
-      placesList.append(createCard(item, openImageCardPopup));
+      placesList.append(createCard(item, profileId, openImageCardPopup));
     })
   })
   .catch((err) => {

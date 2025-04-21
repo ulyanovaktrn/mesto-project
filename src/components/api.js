@@ -46,3 +46,33 @@ export const editProfile = (nameValue, jobValue) => {
         return Promise.reject(`Ошибка: ${res.status}`);
         });
 }
+
+export const addCard = (nameValue, linkValue) => {
+    return fetch(`${config.baseUrl}/cards`, {
+      headers: config.headers,
+      method: 'POST',
+      body: JSON.stringify({
+        name: nameValue,
+        link: linkValue
+      })
+    })
+    .then(res => {
+        if (res.ok) {
+            return res.json();
+        }
+        return Promise.reject(`Ошибка: ${res.status}`);
+    });
+}
+
+export const toggleLike = (cardId, isLiked) => {
+    return fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
+        headers: config.headers,
+        method: isLiked ? 'DELETE' : 'PUT'
+    })
+    .then(res => {
+        if (res.ok) {
+            return res.json();
+        }
+        return Promise.reject(`Ошибка: ${res.status}`);
+    });
+}
