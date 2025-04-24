@@ -1,4 +1,4 @@
-import { toggleLike } from "./api";
+import { toggleLike, removeCard } from "./api";
 
 //Функция создания карточки
 function createCard(itemCard, profileId, handleImageClick) {
@@ -22,15 +22,25 @@ function createCard(itemCard, profileId, handleImageClick) {
     }
   
     likeCardBtn.addEventListener('click', (evt) => handleLikeCard(evt, likeNum, cardId));
-    delCardBtn.addEventListener('click', handleDelCard);
+    if (itemCard.owner._id !== profileId){
+        delCardBtn.classList.add('card__delete-button_disabled');
+    } else {
+        delCardBtn.addEventListener('click', (evt) => handleDelCard(evt, cardId));
+    }
     imageCard.addEventListener('click', () => handleImageClick(imageCard));
   
     return cloneCardTemplate;
 }
   
   //Функция удаления карточки
-function handleDelCard(evt){
-    evt.target.closest('.places__item').remove();
+function handleDelCard(evt, cardId){
+    removeCard(cardId)
+        .then(() => {
+            evt.target.closest('.places__item').remove();
+        })
+        .catch(err => {
+            console.log(err);
+        });
 }
   
 function handleLikeCard(evt, likeNum, cardId){

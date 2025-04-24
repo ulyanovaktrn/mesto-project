@@ -9,7 +9,7 @@ const showInputError = (popupForm, formInput, errorMessage, settings) => {
 
 const hideInputError = (popupForm, formInput, settings) => {
     const formError = popupForm.querySelector(`.${formInput.name}-input-error`);
-  
+
     formInput.classList.remove(settings.inputErrorClass);
     formError.classList.remove(settings.errorClass);
     formError.textContent = '';

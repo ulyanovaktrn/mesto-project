@@ -76,3 +76,32 @@ export const toggleLike = (cardId, isLiked) => {
         return Promise.reject(`Ошибка: ${res.status}`);
     });
 }
+
+export const removeCard = (cardId) => {
+    return fetch(`${config.baseUrl}/cards/${cardId}`, {
+        headers: config.headers,
+        method: 'DELETE'
+    })
+    .then(res => {
+        if (res.ok) {
+            return res.json();
+        }
+        return Promise.reject(`Ошибка: ${res.status}`);
+    });
+}
+
+export const updateAvatar = (avatarLink) => {
+    return fetch(`${config.baseUrl}/users/me/avatar`, {
+        headers: config.headers,
+        method: 'PATCH',
+        body: JSON.stringify({
+          avatar: avatarLink
+        })
+      })
+        .then(res => {
+            if (res.ok) {
+                return res.json();
+            }
+            return Promise.reject(`Ошибка: ${res.status}`);
+        });
+}
