@@ -5,7 +5,6 @@ const showInputError = (popupForm, formInput, errorMessage, settings) => {
     formError.textContent = errorMessage;
     formError.classList.add(settings.errorClass);
 };
-  
 
 const hideInputError = (popupForm, formInput, settings) => {
     const formError = popupForm.querySelector(`.${formInput.name}-input-error`);
@@ -15,7 +14,6 @@ const hideInputError = (popupForm, formInput, settings) => {
     formError.textContent = '';
 };
 
-
 const isValid = (popupForm, formInput, settings) => {
     if (!formInput.validity.valid) {
       showInputError(popupForm, formInput, formInput.validationMessage, settings);
@@ -23,7 +21,6 @@ const isValid = (popupForm, formInput, settings) => {
       hideInputError(popupForm, formInput, settings);
     };
   };
-
 
 const setEventListeners = (popupForm, settings) => {
     const inputList = Array.from(popupForm.querySelectorAll(settings.inputSelector));
@@ -38,7 +35,6 @@ const setEventListeners = (popupForm, settings) => {
     });
 };
 
-
 const enableValidation = (settings) => {
     const formList = Array.from(document.querySelectorAll(settings.formSelector));
 
@@ -50,13 +46,11 @@ const enableValidation = (settings) => {
     });
 };
 
-
 const hasInvalidInput = (inputList) => {
     return inputList.some((formInput) => {
       return !formInput.validity.valid;
     })
 };
-
 
 const toggleButtonState = (inputList, buttonElement, settings) => {
     if (hasInvalidInput(inputList)) {
@@ -66,7 +60,6 @@ const toggleButtonState = (inputList, buttonElement, settings) => {
         buttonElement.disabled = false;
     }
 };
-
 
 const inactivateButton = (buttonItem, settings) => {
     buttonItem.classList.add(settings.inactiveButtonClass);

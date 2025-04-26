@@ -1,6 +1,6 @@
 import { toggleLike, removeCard } from "./api";
 
-//Функция создания карточки
+
 function createCard(itemCard, profileId, handleImageClick) {
     const cloneCardTemplate = document.querySelector('#card-template').content.cloneNode(true);
     const imageCard = cloneCardTemplate.querySelector('.card__image');
@@ -31,8 +31,7 @@ function createCard(itemCard, profileId, handleImageClick) {
   
     return cloneCardTemplate;
 }
-  
-  //Функция удаления карточки
+
 function handleDelCard(evt, cardId){
     removeCard(cardId)
         .then(() => {
@@ -42,7 +41,7 @@ function handleDelCard(evt, cardId){
             console.log(err);
         });
 }
-  
+
 function handleLikeCard(evt, likeNum, cardId){
     toggleLike(cardId, !evt.target.classList.toggle('card__like-button_is-active'))
         .then(cardData => {
